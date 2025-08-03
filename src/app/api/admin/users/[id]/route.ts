@@ -20,9 +20,10 @@ const updateUserSchema = z.object({
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const cookieStore = await cookies();
     const supabase = createServerClient<Database>(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -100,7 +101,7 @@ export async function GET(
         created_schedules:schedules!schedules_created_by_fkey(count),
         assigned_schedules:schedules!schedules_employee_id_fkey(count)
       `)
-      .eq('id', params.id)
+      .eq('id', id)
       .single();
 
     if (userError || !user) {
@@ -155,9 +156,10 @@ export async function GET(
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const cookieStore = await cookies();
     const supabase = createServerClient<Database>(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -225,7 +227,7 @@ export async function PATCH(
     const { data: existingUser, error: fetchError } = await supabase
       .from('profiles')
       .select('id, role, employee_id')
-      .eq('id', params.id)
+      .eq('id', id)
       .single();
 
     if (fetchError || !existingUser) {
@@ -293,7 +295,7 @@ export async function PATCH(
         ...updateData,
         updated_at: new Date().toISOString(),
       })
-      .eq('id', params.id)
+      .eq('id', id)
       .select(`
         id,
         email,
@@ -337,9 +339,10 @@ export async function PATCH(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const cookieStore = await cookies();
     const supabase = createServerClient<Database>(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -406,7 +409,7 @@ export async function DELETE(
     const { data: existingUser, error: fetchError } = await supabase
       .from('profiles')
       .select('id, email, full_name')
-      .eq('id', params.id)
+      .eq('id', id)
       .single();
 
     if (fetchError || !existingUser) {
@@ -446,7 +449,7 @@ export async function DELETE(
           is_active: false,
           updated_at: new Date().toISOString(),
         })
-        .eq('id', params.id)
+        .eq('id', id)
         .select('id, full_name')
         .single();
 
@@ -482,7 +485,7 @@ export async function DELETE(
     const { error: deleteError } = await supabase
       .from('profiles')
       .delete()
-      .eq('id', params.id);
+      .eq('id', id);
 
     if (deleteError) {
       console.error('Error deleting user profile:', deleteError);

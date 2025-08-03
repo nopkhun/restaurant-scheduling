@@ -5,9 +5,10 @@ import { Database } from '@/types/database';
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const cookieStore = await cookies();
     const supabase = createServerClient<Database>(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -102,7 +103,7 @@ export async function PATCH(
     const { data: advanceRequest, error: fetchError } = await supabase
       .from('salary_advance_requests')
       .select('*')
-      .eq('id', params.id)
+      .eq('id', id)
       .single();
 
     if (fetchError || !advanceRequest) {
@@ -130,7 +131,7 @@ export async function PATCH(
     }
 
     // Update the salary advance request
-    let updateData: any = {};
+    let updateData: Record<string, unknown> = {};
 
     if (action === 'approve') {
       updateData = {
@@ -157,7 +158,7 @@ export async function PATCH(
     const { data: updatedRequest, error: updateError } = await supabase
       .from('salary_advance_requests')
       .update(updateData)
-      .eq('id', params.id)
+      .eq('id', id)
       .select(`
         *,
         employee:profiles!employee_id (
@@ -198,9 +199,10 @@ export async function PATCH(
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const cookieStore = await cookies();
     const supabase = createServerClient<Database>(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -265,7 +267,7 @@ export async function GET(
           full_name
         )
       `)
-      .eq('id', params.id)
+      .eq('id', id)
       .single();
 
     const { data: advanceRequest, error: fetchError } = await query;

@@ -5,9 +5,10 @@ import { Database } from '@/types/database';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const cookieStore = await cookies();
     const supabase = createServerClient<Database>(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -74,7 +75,7 @@ export async function GET(
           full_name
         )
       `)
-      .eq('id', params.id)
+      .eq('id', id)
       .single();
 
     if (periodError || !period) {
@@ -97,7 +98,7 @@ export async function GET(
           full_name
         )
       `)
-      .eq('payroll_period_id', params.id)
+      .eq('payroll_period_id', id)
       .order('created_at', { ascending: false });
 
     if (entriesError) {
@@ -142,9 +143,10 @@ export async function GET(
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const cookieStore = await cookies();
     const supabase = createServerClient<Database>(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -213,7 +215,7 @@ export async function PATCH(
     const { data: period, error: periodError } = await supabase
       .from('payroll_periods')
       .select('*')
-      .eq('id', params.id)
+      .eq('id', id)
       .single();
 
     if (periodError || !period) {
@@ -274,7 +276,7 @@ export async function PATCH(
     const { data: updatedPeriod, error: updateError } = await supabase
       .from('payroll_periods')
       .update(updateData)
-      .eq('id', params.id)
+      .eq('id', id)
       .select(`
         *,
         creator:profiles!created_by (
@@ -310,9 +312,10 @@ export async function PATCH(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const cookieStore = await cookies();
     const supabase = createServerClient<Database>(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -371,7 +374,7 @@ export async function DELETE(
     const { data: entries, error: entriesError } = await supabase
       .from('payroll_entries')
       .select('id')
-      .eq('payroll_period_id', params.id)
+      .eq('payroll_period_id', id)
       .limit(1);
 
     if (entriesError) {
@@ -393,7 +396,7 @@ export async function DELETE(
     const { error: deleteError } = await supabase
       .from('payroll_periods')
       .delete()
-      .eq('id', params.id);
+      .eq('id', id);
 
     if (deleteError) {
       console.error('Error deleting payroll period:', deleteError);

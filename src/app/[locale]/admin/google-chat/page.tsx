@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useTranslations } from 'next-intl';
 import { 
   MessageSquare, 
   Settings, 
@@ -14,7 +13,10 @@ import {
   ExternalLink,
   Copy,
   Eye,
-  EyeOff
+  EyeOff,
+  FileText,
+  Calendar,
+  Clock
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -63,8 +65,6 @@ export default function GoogleChatAdminPage() {
     serviceAccountKey: '',
   });
 
-  const { user } = useAuth();
-  const t = useTranslations();
 
   useEffect(() => {
     loadConfiguration();
@@ -754,7 +754,7 @@ export default function GoogleChatAdminPage() {
                 <p>Add these environment variables to your application:</p>
                 <div className="bg-gray-100 p-4 rounded-lg font-mono text-sm">
                   <div>GOOGLE_CHAT_PROJECT_ID=your-project-id</div>
-                  <div>GOOGLE_CHAT_SERVICE_ACCOUNT_KEY='{`{"type": "service_account", ...}`}'</div>
+                  <div>GOOGLE_CHAT_SERVICE_ACCOUNT_KEY=&apos;{`{&quot;type&quot;: &quot;service_account&quot;, ...}`}&apos;</div>
                   <div>GOOGLE_CHAT_BOT_TOKEN=your-bot-token</div>
                   <div>GOOGLE_CHAT_WEBHOOK_URL={window.location.origin}/api/google-chat/webhook</div>
                   <div>GOOGLE_CHAT_DEFAULT_SPACE=spaces/AAAA... (optional)</div>
@@ -762,7 +762,7 @@ export default function GoogleChatAdminPage() {
 
                 <h3>4. Testing</h3>
                 <ol className="list-decimal list-inside space-y-2">
-                  <li>Use the "Run Tests" button to verify configuration</li>
+                  <li>Use the &quot;Run Tests&quot; button to verify configuration</li>
                   <li>Send test messages to verify message delivery</li>
                   <li>Add the bot to spaces where notifications should be sent</li>
                 </ol>

@@ -7,9 +7,10 @@ import { getPayslipNotificationService } from '@/lib/google-chat/payslip-notific
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const cookieStore = await cookies();
     const supabase = createServerClient<Database>(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -77,7 +78,7 @@ export async function GET(
           *
         )
       `)
-      .eq('id', params.id)
+      .eq('id', id)
       .single();
 
     if (payslipError || !payslip) {
@@ -179,9 +180,10 @@ export async function GET(
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const cookieStore = await cookies();
     const supabase = createServerClient<Database>(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -260,7 +262,7 @@ export async function PATCH(
           )
         )
       `)
-      .eq('id', params.id)
+      .eq('id', id)
       .single();
 
     if (fetchError || !payslip) {
@@ -317,7 +319,7 @@ export async function PATCH(
     const { data: updatedPayslip, error: updateError } = await supabase
       .from('payslips')
       .update(updateData)
-      .eq('id', params.id)
+      .eq('id', id)
       .select()
       .single();
 
@@ -352,9 +354,10 @@ export async function PATCH(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const cookieStore = await cookies();
     const supabase = createServerClient<Database>(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -413,7 +416,7 @@ export async function DELETE(
     const { data: payslip, error: fetchError } = await supabase
       .from('payslips')
       .select('is_sent, slip_number')
-      .eq('id', params.id)
+      .eq('id', id)
       .single();
 
     if (fetchError || !payslip) {
@@ -434,7 +437,7 @@ export async function DELETE(
     const { error: deleteError } = await supabase
       .from('payslips')
       .delete()
-      .eq('id', params.id);
+      .eq('id', id);
 
     if (deleteError) {
       console.error('Error deleting payslip:', deleteError);
