@@ -193,9 +193,7 @@ export default function UsersAdminPage() {
 
     setUpdating(true);
     try {
-      const updateData = { ...formData };
-      delete updateData.email; // Email cannot be updated
-      delete updateData.send_invite; // Not relevant for updates
+      const { email, send_invite, ...updateData } = formData;
 
       const response = await fetch(`/api/admin/users/${selectedUser.id}`, {
         method: 'PATCH',
