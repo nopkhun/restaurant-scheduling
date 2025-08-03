@@ -5,8 +5,8 @@ import createMiddleware from 'next-intl/middleware';
 
 // Create the intl middleware
 const intlMiddleware = createMiddleware({
-  locales: ['en', 'th'],
-  defaultLocale: 'en',
+  locales: ['th', 'en'],
+  defaultLocale: 'th',
   localePrefix: 'always'
 });
 
@@ -15,7 +15,7 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
   // Skip intl middleware for direct locale routes (they work fine)
-  if (pathname.startsWith('/en/') || pathname.startsWith('/th/')) {
+  if (pathname.startsWith('/th/') || pathname.startsWith('/en/')) {
     // Let these routes pass through directly
   } else {
     // Apply intl middleware for root routes that need redirection

@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
 
 export default function LoginRedirect() {
-  redirect('/en/login');
+  redirect('/th/login');
 }

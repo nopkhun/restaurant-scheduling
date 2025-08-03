@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
 
 export default function RegisterRedirect() {
-  redirect('/en/register');
+  redirect('/th/register');
 }

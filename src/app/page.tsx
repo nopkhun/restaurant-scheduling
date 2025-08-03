@@ -1,7 +1,13 @@
 import Link from 'next/link';
-import { Calendar, Clock, Users, TrendingUp, Shield, Globe } from 'lucide-react';
+import { Calendar, Clock, Users, TrendingUp, Shield, Globe, Languages } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 export default function Home() {
   return (
@@ -14,11 +20,31 @@ export default function Home() {
             <h1 className="text-2xl font-bold text-gray-900">RestaurantScheduler</h1>
           </div>
           <div className="flex items-center gap-4">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm">
+                  <Languages className="h-4 w-4 mr-2" />
+                  Language
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem asChild>
+                  <Link href="/th/register" className="flex items-center">
+                    🇹🇭 ภาษาไทย
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/en/register" className="flex items-center">
+                    🇺🇸 English
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <Button variant="ghost" asChild>
-              <Link href="/en/login">Sign In</Link>
+              <Link href="/th/login">เข้าสู่ระบบ</Link>
             </Button>
             <Button asChild>
-              <Link href="/en/register">Get Started</Link>
+              <Link href="/th/register">เริ่มต้นใช้งาน</Link>
             </Button>
           </div>
         </div>
@@ -37,10 +63,10 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" asChild>
-              <Link href="/en/register">Start Free Trial</Link>
+              <Link href="/th/register">เริ่มทดลองใช้ฟรี</Link>
             </Button>
             <Button size="lg" variant="outline" asChild>
-              <Link href="/en/login">Sign In</Link>
+              <Link href="/th/login">เข้าสู่ระบบ</Link>
             </Button>
           </div>
         </div>
@@ -178,7 +204,7 @@ export default function Home() {
             Join hundreds of restaurants that trust us with their scheduling and HR needs.
           </p>
           <Button size="lg" variant="secondary" asChild>
-            <Link href="/en/register">Start Your Free Trial</Link>
+            <Link href="/th/register">เริ่มทดลองใช้ฟรี</Link>
           </Button>
         </div>
       </section>
