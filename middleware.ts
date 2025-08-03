@@ -56,9 +56,7 @@ export async function middleware(request: NextRequest) {
   // Refresh session if expired - required for Server Components
   const { data: { user }, error } = await supabase.auth.getUser();
 
-  const { pathname } = request.nextUrl;
-
-  // Extract locale from pathname
+  // Extract locale from pathname (pathname already defined above)
   const localePattern = /^\/(en|th)(\/.*)?$/;
   const localeMatch = pathname.match(localePattern);
   const locale = localeMatch ? localeMatch[1] : null;
