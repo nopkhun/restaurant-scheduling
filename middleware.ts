@@ -11,10 +11,18 @@ const intlMiddleware = createMiddleware({
 });
 
 export async function middleware(request: NextRequest) {
-  // Handle internationalization first
-  const intlResponse = intlMiddleware(request);
-  if (intlResponse) {
-    return intlResponse;
+  // Handle internationalization first - but only for non-static routes
+  const { pathname } = request.nextUrl;
+  
+  // Skip intl middleware for direct locale routes (they work fine)
+  if (pathname.startsWith('/en/') || pathname.startsWith('/th/')) {
+    // Let these routes pass through directly
+  } else {
+    // Apply intl middleware for root routes that need redirection
+    const intlResponse = intlMiddleware(request);
+    if (intlResponse) {
+      return intlResponse;
+    }
   }
   let response = NextResponse.next({
     request: {
