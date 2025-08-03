@@ -59,7 +59,7 @@ A comprehensive employee scheduling and time tracking system built for restauran
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/nopkhun/restaurant-scheduling.git
    cd restaurant-scheduling
    ```
 
