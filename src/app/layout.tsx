@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { Toaster } from 'sonner';
 import "./globals.css";
@@ -13,7 +13,11 @@ export const metadata: Metadata = {
   description: "Comprehensive employee scheduling and HR management for restaurants",
   keywords: ["restaurant", "scheduling", "employee management", "payroll", "time tracking"],
   authors: [{ name: "Restaurant Scheduling Team" }],
-  viewport: "width=device-width, initial-scale=1",
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({

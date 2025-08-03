@@ -290,7 +290,7 @@ export default function UsersAdminPage() {
   };
 
   const getRoleBadge = (role: string) => {
-    const roleColors = {
+    const roleColors: Record<string, string> = {
       admin: 'bg-red-100 text-red-800',
       hr: 'bg-purple-100 text-purple-800',
       accounting: 'bg-blue-100 text-blue-800',
