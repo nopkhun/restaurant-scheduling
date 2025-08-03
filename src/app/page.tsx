@@ -15,10 +15,10 @@ export default function Home() {
           </div>
           <div className="flex items-center gap-4">
             <Button variant="ghost" asChild>
-              <Link href="/login">Sign In</Link>
+              <Link href="/en/login">Sign In</Link>
             </Button>
             <Button asChild>
-              <Link href="/register">Get Started</Link>
+              <Link href="/en/register">Get Started</Link>
             </Button>
           </div>
         </div>
@@ -37,10 +37,10 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" asChild>
-              <Link href="/register">Start Free Trial</Link>
+              <Link href="/en/register">Start Free Trial</Link>
             </Button>
             <Button size="lg" variant="outline" asChild>
-              <Link href="/login">Sign In</Link>
+              <Link href="/en/login">Sign In</Link>
             </Button>
           </div>
         </div>
@@ -178,7 +178,7 @@ export default function Home() {
             Join hundreds of restaurants that trust us with their scheduling and HR needs.
           </p>
           <Button size="lg" variant="secondary" asChild>
-            <Link href="/register">Start Your Free Trial</Link>
+            <Link href="/en/register">Start Your Free Trial</Link>
           </Button>
         </div>
       </section>
